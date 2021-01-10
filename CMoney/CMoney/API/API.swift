@@ -27,25 +27,4 @@ class API {
         }.resume()
     }
     
-    
-    func downLoadImageURL(url: String,
-                          success: @escaping (UIImage) -> Void,
-                          failure: @escaping (Error) -> Void) {
-        
-        guard let url = URL(string: url) else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, err) in
-            if let err = err {
-                failure(err)
-                return
-            }
-            if let data = data,
-               let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    success(image)
-                }
-            }
-        }.resume()
-    }
-    
 }

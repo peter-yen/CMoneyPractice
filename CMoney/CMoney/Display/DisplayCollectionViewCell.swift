@@ -6,12 +6,6 @@ class DisplayCollectionViewCell: UICollectionViewCell {
         didSet {
             self.idLabel.text = "\(self.data.id)"
             self.titleLabel.text = self.data.title
-            API.shared.downLoadImageURL(url: self.data.thumbnailURL) { (image) in
-                self.thumbnailImageView.image = image
-            } failure: { (err) in
-                print(err.localizedDescription)
-                return
-            }
         }
     }
     

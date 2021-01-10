@@ -6,26 +6,20 @@ class DetailViewController: UIViewController {
     convenience init(data: Data) {
         self.init()
         self.data = data
-        
-        API.shared.downLoadImageURL(url: self.data.thumbnailURL) { (image) in
-            self.detailImageView.image = image
-        } failure: { (err) in
-            print(err.localizedDescription)
-            return
-        }
+        self.detailImageView.cacheImage(urlString: self.data.thumbnailURL)
         self.detailIdLabel.text = "\(self.data.id)"
         self.detailTitleLabel.text = self.data.title
     }
     
     private lazy var detailImageView: UIImageView = {
-       let v = UIImageView()
+        let v = UIImageView()
         v.clipsToBounds = true
         v.contentMode = .scaleAspectFill
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     private lazy var detailIdLabel: UILabel = {
-       let l = UILabel()
+        let l = UILabel()
         l.font = UIFont(name: "Noteworthy-Bold", size: 16)
         l.textAlignment = .center
         l.textColor = .systemRed
@@ -33,7 +27,7 @@ class DetailViewController: UIViewController {
         return l
     }()
     private lazy var detailTitleLabel: UILabel = {
-       let l = UILabel()
+        let l = UILabel()
         l.font = UIFont(name: "HelveticaNeue-BoldItalic", size: 15)
         l.textAlignment = .center
         l.numberOfLines = 0
@@ -46,7 +40,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.configureUI()
     }
     

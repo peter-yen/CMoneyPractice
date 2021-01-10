@@ -53,6 +53,7 @@ extension DisplayViewController: UICollectionViewDelegate, UICollectionViewDataS
         let data = self.dataArray[indexPath.item]
         
         cell.data = data
+        cell.thumbnailImageView.cacheImage(urlString: data.thumbnailURL)
         
         return cell
     }

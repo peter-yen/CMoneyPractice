@@ -9,7 +9,7 @@ class MainViewController: UIViewController {
         b.addTarget(self, action: #selector(nextPageButtonDidTap), for: .touchUpInside)
         b.backgroundColor = .blue
         b.clipsToBounds = true
-        b.alpha = 0.4
+        b.alpha = 0
         b.isEnabled = false
         b.layer.cornerRadius = 15
         b.translatesAutoresizingMaskIntoConstraints = false
@@ -26,10 +26,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         self.configure()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.nextPageButton.alpha = 1
-            self.nextPageButton.isEnabled = true
-        }
+        self.createActivityView()
     }
     
     func configure() {
@@ -56,6 +53,24 @@ class MainViewController: UIViewController {
         } failure: { (err) in
             print(err.localizedDescription)
             return
+        }
+    }
+    
+    func createActivityView() {
+        let child = ActivityViewController()
+        
+        self.addChild(child)
+        child.view.frame = view.frame
+        self.view.addSubview(child.view)
+        child.didMove(toParent: self)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.nextPageButton.alpha = 1
+            self.nextPageButton.isEnabled = true
+        
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
         }
     }
     
